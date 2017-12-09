@@ -1,13 +1,11 @@
 from tkinter import *
 import subprocess
 
-
 def shutdown(event):
-    global a
-    subprocess.call(["shutdown", "-s","-f" ,"-t", "{}".format(60*60*2)])
+    global time
+    subprocess.call(["shutdown", "-s","-f" ,"-t", "{}".format(time)])
     
 def restart(event):
-    global a
     subprocess.call(["shutdown", "-r", "-t", "600"])
     
 def abort(event):
@@ -31,12 +29,15 @@ l1= Label(f2,text='Enter The Time In Minute:',bg='lightblue')
 
 l1.grid(row = 0, column=0,pady=18)
 entry.grid(padx=50,pady=28)
+
 f2.pack(side=RIGHT)
 f1.pack(fill=BOTH)
 b1.pack(fill=BOTH)
 b2.pack(fill=BOTH)
 b3.pack(fill=BOTH)
 b5.pack(fill=BOTH)
+
+time = entery.get()*60
 
 b1.bind("<Button-1>",shutdown)
 b2.bind("<Button-1>",restart)
