@@ -37,7 +37,7 @@ b2.pack(fill=BOTH)
 b3.pack(fill=BOTH)
 b5.pack(fill=BOTH)
 
-time = entery.get()*60
+time = entry.get()*60
 
 b1.bind("<Button-1>",shutdown)
 b2.bind("<Button-1>",restart)
