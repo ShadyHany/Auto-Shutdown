@@ -7,7 +7,6 @@ time=60
 def shutdown(event):
     global time
     if getTime() == 1:
-        root.mainloop()
         return
     subprocess.call(["shutdown", "-s","-f" ,"-t", "{}".format(time*60)])
     Time_Of_Shutdown('shutdown')
@@ -15,7 +14,6 @@ def shutdown(event):
 def restart(event):
     global time
     if getTime() == 1:
-        root.mainloop()
         return
     subprocess.call(["shutdown", "-r", "-t", "{}".format(time*60)])
     Time_Of_Shutdown('restart')
