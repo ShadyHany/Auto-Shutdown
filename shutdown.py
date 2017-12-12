@@ -44,11 +44,7 @@ def Exit(event):
     msg=messagebox.askyesno('Exit','Are you sure you want exit?')
     if msg is True:
         root.destroy()
-    else:
-        root.mainloop()
-
-    
-    
+  
 root = Tk()
 root.title('Shutdown')
 
