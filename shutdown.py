@@ -4,27 +4,27 @@ import subprocess
 
 time=60
 
-def shutdown(event):
+def shutdown():
     global time
     if getTime() == 1:
         return
     subprocess.call(["shutdown", "-s","-f" ,"-t", "{}".format(time*60)])
-    Time_Of_Shutdown('shutdown')
+    Time_Of_Shutdown_label('shutdown')
     
-def restart(event):
+def restart():
     global time
     if getTime() == 1:
         return
     subprocess.call(["shutdown", "-r", "-t", "{}".format(time*60)])
-    Time_Of_Shutdown('restart')
+    Time_Of_Shutdown_label('restart')
     
-def abort(event):
+def abort():
     subprocess.call(["shutdown", "-a"])
     l2.config(text='User aborted the operation')
     
 def getTime():
     global time
-    ttext=text.get()
+    ttext = entry.get()
     try:
         time=int(ttext)
     except:
@@ -32,7 +32,7 @@ def getTime():
         entry.delete(0,END)
         return 1
 
-def Time_Of_Shutdown(operation):
+def Time_Of_Shutdown_label(operation):
     if entry.get() == '':
         return
     else:
@@ -40,7 +40,7 @@ def Time_Of_Shutdown(operation):
         entry.delete(0,END)
         return
 
-def Exit(event):
+def Exit():
     msg=messagebox.askyesno('Exit','Are you sure you want exit?')
     if msg is True:
         root.destroy()
@@ -48,14 +48,12 @@ def Exit(event):
 root = Tk()
 root.title('Shutdown')
 
-text=StringVar()
-
 f1 =Frame(root,width=200,height=200,bg='lightblue')
-b1 =Button(f1,text='shutdown after:',fg='red', bg ='white')
-b2 =Button(f1,text='restart after:',fg='blue',bg ='white')
-b3 =Button(f1,text='abort:',fg='green',bg ='white')
-b5 =Button(f1,text='Exit',fg='purple',bg ='white')
-entry=Entry(root,width=10,textvariable=text)
+b1 =Button(f1,text='shutdown after:',fg='red', bg ='white',command =shutdown)
+b2 =Button(f1,text='restart after:',fg='blue',bg ='white',command =restart)
+b3 =Button(f1,text='abort:',fg='green',bg ='white',command =abort)
+b5 =Button(f1,text='Exit',fg='purple',bg ='white',command =Exit)
+entry=Entry(root,width=10)
 l1= Label(root,text='Enter The Time In Minute:')
 
 f2=Frame(root)
@@ -72,10 +70,4 @@ b2.pack(fill=BOTH)
 b3.pack(fill=BOTH)
 b5.pack(fill=BOTH)
 
-b1.bind("<Button-1>",shutdown)
-b2.bind("<Button-1>",restart)
-b3.bind("<Button-1>",abort)
-b5.bind("<Button-1>",Exit)
-
 root.mainloop()
-
