@@ -46,6 +46,7 @@ def errors(msg):
 
 
 def getTime():
+    global time
     
     time_from_entry_box=entry.get()
     try:
