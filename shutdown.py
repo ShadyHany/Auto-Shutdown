@@ -4,6 +4,7 @@ from datetime import datetime ,timedelta
 import subprocess
 
 time = 60 #temprory time changes on calling getTime() function
+set_to_shutdown = 0 #variable to indicate the operation 
 
 def shutdown():
     
@@ -11,8 +12,10 @@ def shutdown():
         return
     elif getTime() == 'shutdown_now':
         l2.config(text='Your Computer Will shutdown now!')
- 
+    print('before',set_to_shutdown)
+    reset_shutdownTime()    
     subprocess.call(["shutdown", "-s","-f" ,"-t", "{}".format(time*60)])
+    print('after',set_to_shutdown)
     dt = computer_shutdown_on(time)
     
     if getTime() != 'shutdown_now':
@@ -25,6 +28,8 @@ def restart():
         return
     elif getTime() == 'shutdown_now':
         l2.config(text='Your Computer Will restart now!')
+
+    reset_shutdownTime()
     
     subprocess.call(["shutdown", "-r", "-t", "{}".format(time*60)])
     dt = computer_shutdown_on(time)
@@ -34,10 +39,11 @@ def restart():
 
     
 def abort():
-    
+    global set_to_shutdown
     subprocess.call(["shutdown", "-a"])
     l2.config(text='User aborted the operation')
-
+    set_to_shutdown = 0
+    print('code "abort()" excuted',set_to_shutdown)
 
 def errors(msg):
     
@@ -46,6 +52,7 @@ def errors(msg):
 
 
 def getTime():
+
     global time
     
     time_from_entry_box=entry.get()
@@ -93,6 +100,14 @@ def computer_shutdown_on(t):
     final = tdelta + now
     return final.strftime('%Y-%m-%d %H:%M:%S') 
 
+def reset_shutdownTime():
+    global set_to_shutdown
+    
+    if set_to_shutdown == 1:
+        abort()
+        print('code "reset_shutdownTime()" excuted')
+    set_to_shutdown = 1
+    
 
 def Exit():
     
